@@ -105,12 +105,12 @@ use Validator\FieldValidator;
 use Validator\Rule\TypeString;
 
 // example 1
-FieldValidator::requiredWith('i_will_be_required', 'when_i_exists' new TypeString())
+FieldValidator::requiredWith('i_will_be_required', 'when_i_exists', new TypeString())
     ->validate(['when_i_exists' => 'Hello world'])
     ->hasErrors(); // will return true
 
 // example 2
-FieldValidator::requiredWith('i_will_be_required', 'when_i_exists' new TypeString())
+FieldValidator::requiredWith('i_will_be_required', 'when_i_exists', new TypeString())
     ->validate([
         'i_will_be_required' => 'Hello universe',
         'when_i_exists' => 'Hello world',
@@ -118,7 +118,7 @@ FieldValidator::requiredWith('i_will_be_required', 'when_i_exists' new TypeStrin
     ->hasErrors(); // will return false
 
 // example 3
-FieldValidator::requiredWith('i_will_be_required', 'when_i_exists' new TypeString())
+FieldValidator::requiredWith('i_will_be_required', 'when_i_exists', new TypeString())
     ->validate(['not_related_param' => 'Hello world'])
     ->hasErrors(); // will return false
 
