@@ -2,8 +2,9 @@
   "name": "marcino0o/php-validator",
   "type": "library",
   "description": "Advanced validation package",
-  "minimum-stability": "stable",
-  "license": "GNU General Public License v3.0",
+  "keywords": ["php","validation"],
+  "homepage": "https://github.com/marcino0o/php-validator",
+  "license": "MIT",
   "authors": [
     {
       "name": "marcin",
