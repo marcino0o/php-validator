@@ -1,5 +1,5 @@
 # php-validator
-___
+
 ![PHP version](https://img.shields.io/badge/php-%5E8.1-blue)
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/marcino0o/php-validator)
 ![GitHub](https://img.shields.io/github/license/marcino0o/php-validator)
@@ -9,12 +9,12 @@ ___
 PHP package for easy validation
 
 ## Requirements
-___
+
 * PHP >= 8.1
 * composer
 
 ## Installation
-___
+
 Using composer:
 
 ```console
@@ -22,7 +22,7 @@ composer require "marcino0o/php-validator"
 ```
 
 ## Usage
-___
+
 ### Quick example
 
 ```php
