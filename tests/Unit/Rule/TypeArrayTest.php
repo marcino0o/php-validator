@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Unit\Rule;
 
 use PHPUnit\Framework\TestCase;
-use RWS\Validator\Rule\TypeArray;
+use Validator\Rule\TypeArray;
 
 class TypeArrayTest extends TestCase
 {

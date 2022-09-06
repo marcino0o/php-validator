@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Unit\Rule;
 
 use PHPUnit\Framework\TestCase;
-use RWS\Validator\Rule\TypeString;
+use Validator\Rule\TypeString;
 
 class TypeStringTest extends TestCase
 {

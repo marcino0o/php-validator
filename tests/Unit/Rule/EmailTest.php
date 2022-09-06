@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace RWS\Validator\Tests\Unit\Rule;
+namespace Validator\Tests\Unit\Rule;
 
 use PHPUnit\Framework\TestCase;
-use RWS\Validator\Rule\Email;
+use Validator\Rule\Email;
 
 class EmailTest extends TestCase
 {

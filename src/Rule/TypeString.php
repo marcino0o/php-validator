@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace RWS\Validator\Rule;
+namespace Validator\Rule;
 
-use RWS\Validator\Error\Error;
-use RWS\Validator\Rule;
+use Validator\Error\Error;
+use Validator\Rule;
 
 class TypeString extends Rule
 {

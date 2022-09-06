@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace RWS\Validator;
+namespace Validator;
 
-use RWS\Validator\Error\Error;
-use RWS\Validator\Error\ErrorBag;
+use Validator\Error\Error;
+use Validator\Error\ErrorBag;
 
 class FieldValidator
 {

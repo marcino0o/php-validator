@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace RWS\Validator;
+namespace Validator;
 
-use RWS\Validator\Error\ErrorBag;
+use Validator\Error\ErrorBag;
 
 abstract class Rule
 {

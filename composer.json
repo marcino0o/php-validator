@@ -19,12 +19,12 @@
   },
   "autoload": {
     "psr-4": {
-      "RWS\\Validator\\": "src"
+      "Validator\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "RWS\\Validator\\Tests\\": "tests"
+      "Validator\\Tests\\": "tests"
     }
   }
 }

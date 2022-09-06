@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace RWS\Validator\Tests\Unit;
+namespace Validator\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use RWS\Validator\FieldSetValidator;
-use RWS\Validator\FieldValidator;
-use RWS\Validator\Rule\Email;
+use Validator\FieldSetValidator;
+use Validator\FieldValidator;
+use Validator\Rule\Email;
 
 class FieldSetValidatorTest extends TestCase
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace RWS\Validator;
+namespace Validator;
 
 class FieldSetValidator
 {

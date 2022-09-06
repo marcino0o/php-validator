@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace RWS\Validator\Error;
+namespace Validator\Error;
 
 use ArrayIterator;
 
