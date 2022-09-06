@@ -19,13 +19,15 @@ class FieldSetValidator
         $this->fields = $fieldValidators;
     }
 
-    public function validate(array $fieldSet): void
+    public function validate(array $fieldSet): self
     {
         foreach ($this->fields as $field) {
             if ($field->validate($fieldSet)->hasErrors()) {
                 $this->errors[$field->name] = $field->getErrors();
             }
         }
+
+        return $this;
     }
 
     public function hasErrors(): bool
