@@ -9,9 +9,7 @@ use Validator\Error\ErrorBag;
 
 class FieldValidator
 {
-    /**
-     * @var Rule[]
-     */
+    /** @var Rule[] */
     private array $rules;
     private bool $required;
     private bool $nullable = false;

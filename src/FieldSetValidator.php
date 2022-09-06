@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Validator;
 
+use Validator\Error\ErrorBag;
+
 class FieldSetValidator
 {
-    /**
-     * @var FieldValidator[]
-     */
+    /** @var FieldValidator[] */
     private array $fields;
+    /** @var ErrorBag[] */
     private array $errors = [];
 
     public function __construct(
