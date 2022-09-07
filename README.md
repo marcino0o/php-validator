@@ -155,7 +155,7 @@ $example2 = new TypeString;
 $example1->withMessage(Dictionary::LENGTH_TOO_SHORT, 'Text is too short.')
 ```
 
-### Available rules
+## Available rules
 - [Email](https://github.com/marcino0o/php-validator/blob/main/docs/rules/Email.md)
 - JWTString
 - TypeArray
