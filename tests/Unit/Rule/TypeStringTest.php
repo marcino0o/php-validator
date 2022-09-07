@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Unit\Rule;
+namespace Validator\Tests\Unit\Rule;
 
 use PHPUnit\Framework\TestCase;
 use Validator\Rule\TypeString;

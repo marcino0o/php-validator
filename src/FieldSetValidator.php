@@ -33,7 +33,7 @@ class FieldSetValidator
 //    public function assertValid(array $fieldSet): void
 //    {
 //        if ($this->validate($fieldSet)->hasErrors()) {
-//            throw new \Exception('Validation faild');
+//            throw new \Exception('Validation failed');
 //        }
 //    }
 

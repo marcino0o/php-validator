@@ -10,9 +10,8 @@ use Validator\Rule\Email;
 class EmailTest extends TestCase
 {
     /**
-     * @param string $email
-     * @dataProvider validEmailsProvider
      * @test
+     * @dataProvider validEmailsProvider
      */
     public function shouldBeSatisfiedBy(string $email): void
     {
@@ -34,9 +33,8 @@ class EmailTest extends TestCase
     }
 
     /**
-     * @param string $email
-     * @dataProvider invalidEmailsProvider
      * @test
+     * @dataProvider invalidEmailsProvider
      */
     public function shouldNotBeSatisfiedBy(string $email): void
     {
