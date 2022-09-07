@@ -8,6 +8,11 @@
 
 PHP package for easy validation
 
+## Features
+
+* field sets validation
+* custom error messages
+
 ## Requirements
 
 * PHP >= 8.1
@@ -31,7 +36,7 @@ composer require "marcino0o/php-validator"
 require('vendor/autoload.php');
 
 use Validator\FieldSetValidator;
-use Validator\FieldValidator;
+use Validator\Field;
 use Validator\Rule\Email;
 use Validator\Rule\TypeString;
 
@@ -41,8 +46,8 @@ $dataToValidate = [
 ]; 
 
 $validator = new FieldSetValidator(
-    FieldValidator::required('email', new Email()),
-    FieldValidator::optional('name', new TypeString())->nullable(),
+    Field::required('email', new Email()),
+    Field::optional('name', new TypeString())->nullable(),
 );
 
 if ($validator->validate($dataToValidate)->hasErrors()) {
@@ -51,66 +56,69 @@ if ($validator->validate($dataToValidate)->hasErrors()) {
 }
 
 // all good
-
 ```
 
 ### Field requirement options
+
 **Always required**
+
 ```php
 <?php
 
 require('vendor/autoload.php');
 
-use Validator\FieldValidator;
+use Validator\Field;
 use Validator\Rule\TypeString;
 
 // example 1
-FieldValidator::required('text', new TypeString())
+Field::required('text', new TypeString())
     ->validate(['text' => 'Hello world'])
     ->hasErrors(); // will return false
 
 // example 2
-FieldValidator::required('text', new TypeString())
+Field::required('text', new TypeString())
     ->validate([])
     ->hasErrors(); // will return true
-
 ```
+
 **Optional**
+
 ```php
 <?php
 
 require('vendor/autoload.php');
 
-use Validator\FieldValidator;
+use Validator\Field;
 use Validator\Rule\TypeString;
 
 // example 1
-FieldValidator::optional('text', new TypeString())
+Field::optional('text', new TypeString())
     ->validate(['text' => 'Hello world'])
     ->hasErrors(); // will return false
 
 // example 2
-FieldValidator::optional('text', new TypeString())
+Field::optional('text', new TypeString())
     ->validate([])
     ->hasErrors(); // will return false
-
 ```
+
 **Required with other field**
+
 ```php
 <?php
 
 require('vendor/autoload.php');
 
-use Validator\FieldValidator;
+use Validator\Field;
 use Validator\Rule\TypeString;
 
 // example 1
-FieldValidator::requiredWith('i_will_be_required', 'when_i_exists', new TypeString())
+Field::requiredWith('i_will_be_required', 'when_i_exists', new TypeString())
     ->validate(['when_i_exists' => 'Hello world'])
     ->hasErrors(); // will return true
 
 // example 2
-FieldValidator::requiredWith('i_will_be_required', 'when_i_exists', new TypeString())
+Field::requiredWith('i_will_be_required', 'when_i_exists', new TypeString())
     ->validate([
         'i_will_be_required' => 'Hello universe',
         'when_i_exists' => 'Hello world',
@@ -118,16 +126,37 @@ FieldValidator::requiredWith('i_will_be_required', 'when_i_exists', new TypeStri
     ->hasErrors(); // will return false
 
 // example 3
-FieldValidator::requiredWith('i_will_be_required', 'when_i_exists', new TypeString())
+Field::requiredWith('i_will_be_required', 'when_i_exists', new TypeString())
     ->validate(['not_related_param' => 'Hello world'])
     ->hasErrors(); // will return false
-
 ```
-### Available rules
-| **Rule**   | **Description** |
-|------------|-----------------|
-| Email      |                 |
-| JWTString  |                 |
-| TypeArray  |                 |
-| TypeString |                 |
 
+### Custom messages
+
+```php
+<?php
+
+require('vendor/autoload.php');
+
+use Validator\Dictionary\TypeStringDictionary as Dictionary;
+use Validator\Rule\TypeString;
+
+$example1 = new TypeString;
+$example1->withMessages([
+    Dictionary::LENGTH_TOO_SHORT => 'C\'mon, {{ minLength }} characters it\'s not much! You can write more than "{{ value }}"',
+    Dictionary::LENGTH_TOO_LONG => 'Take it easy! There is a space for only {{ maxLength }} characters!',
+]);
+
+$example1->lengthBetween(5, 1000)->isSatisfiedBy('abc'); // false
+$example1->getErrors()->first()->getMessage(); // C'mon, 5 characters it's not much! You can write more than "abc"
+
+
+$example2 = new TypeString;
+$example1->withMessage(Dictionary::LENGTH_TOO_SHORT, 'Text is too short.')
+```
+
+### Available rules
+- [Email](https://github.com/marcino0o/php-validator/blob/main/docs/rules/Email.md)
+- JWTString
+- TypeArray
+- [TypeString](https://github.com/marcino0o/php-validator/blob/main/docs/rules/TypeString.md)

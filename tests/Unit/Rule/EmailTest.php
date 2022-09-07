@@ -55,4 +55,28 @@ class EmailTest extends TestCase
             ['joe.doe.example.com'],
         ];
     }
+
+    /**
+     * @test
+     */
+    public function shouldHandleBlockedDomains(): void
+    {
+        $sut = (new Email())->notInDomain('example.com', 'gmail.com');
+
+        $this->assertFalse($sut->isSatisfiedBy('joe.doe@example.com'));
+        $this->assertFalse($sut->isSatisfiedBy('joe.doe@gmail.com'));
+        $this->assertTrue($sut->isSatisfiedBy('joe.doe@yahoo.com'));
+    }
+
+    /**
+     * @test
+     */
+    public function shouldHandleAllowedDomains(): void
+    {
+        $sut = (new Email())->inDomain('example.com', 'gmail.com');
+
+        $this->assertTrue($sut->isSatisfiedBy('joe.doe@example.com'));
+        $this->assertTrue($sut->isSatisfiedBy('joe.doe@gmail.com'));
+        $this->assertFalse($sut->isSatisfiedBy('joe.doe@yahoo.com'));
+    }
 }

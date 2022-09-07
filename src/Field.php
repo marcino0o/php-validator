@@ -8,7 +8,7 @@ use Validator\Error\Error;
 use Validator\Error\ErrorBag;
 use Validator\Rule\Rule;
 
-class FieldValidator
+class Field
 {
     /** @var Rule[] */
     private array $rules;

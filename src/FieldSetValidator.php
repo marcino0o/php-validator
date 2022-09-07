@@ -8,13 +8,13 @@ use Validator\Error\ErrorBag;
 
 class FieldSetValidator
 {
-    /** @var FieldValidator[] */
+    /** @var Field[] */
     private array $fields;
     /** @var array|ErrorBag[] */
     private array $errors = [];
 
     public function __construct(
-        FieldValidator ...$fieldValidators
+        Field ...$fieldValidators
     ) {
         $this->fields = $fieldValidators;
     }
@@ -29,13 +29,6 @@ class FieldSetValidator
 
         return $this;
     }
-
-//    public function assertValid(array $fieldSet): void
-//    {
-//        if ($this->validate($fieldSet)->hasErrors()) {
-//            throw new \Exception('Validation failed');
-//        }
-//    }
 
     public function hasErrors(): bool
     {

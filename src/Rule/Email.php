@@ -9,6 +9,24 @@ use Validator\Dictionary\EmailDictionary as Dictionary;
 class Email extends Rule
 {
     protected array $messages = Dictionary::MESSAGES;
+    /*** @var null|string[]*/
+    private ?array $allowedDomains = null;
+    /*** @var null|string[]*/
+    private ?array $blockedDomains = null;
+
+    public function inDomain(string ...$allowedDomains): self
+    {
+        $this->allowedDomains = $allowedDomains;
+
+        return $this;
+    }
+
+    public function notInDomain(string ...$blockedDomains): self
+    {
+        $this->blockedDomains = $blockedDomains;
+
+        return $this;
+    }
 
     protected function isValid(mixed $subject): bool
     {
@@ -22,6 +40,28 @@ class Email extends Rule
 
         if (!checkdnsrr($domain, 'MX')) {
             $this->errors->createAndAppend($this->messages[Dictionary::MUST_HAVE_VALID_DOMAIN], ['value' => $subject]);
+        }
+
+        if ($this->allowedDomains !== null && !in_array($domain, $this->allowedDomains, true)) {
+            $this->errors->createAndAppend(
+                $this->messages[Dictionary::MUST_BE_IN_ALLOWED_DOMAIN],
+                [
+                    'value' => $subject,
+                    'domain' => $domain,
+                    'allowedDomains' => implode(', ', $this->allowedDomains)
+                ]
+            );
+        }
+
+        if ($this->blockedDomains !== null && in_array($domain, $this->blockedDomains, true)) {
+            $this->errors->createAndAppend(
+                $this->messages[Dictionary::MUST_NOT_BE_IN_BLOCKED_DOMAIN],
+                [
+                    'value' => $subject,
+                    'domain' => $domain,
+                    'blockedDomains' => implode(', ', $this->blockedDomains)
+                ]
+            );
         }
 
         return $this->errors->empty();
