@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Validator\Rule;
 
 use Validator\Error\Error;
-use Validator\Rule;
 
 class TypeArray extends Rule
 {
-    public function isSatisfiedBy(mixed $subject): bool
+    protected function isValid(mixed $subject): bool
     {
         if (!is_array($subject)) {
             $this->errors->append(new Error('valueMustBeAnArray', ['value' => $subject]));

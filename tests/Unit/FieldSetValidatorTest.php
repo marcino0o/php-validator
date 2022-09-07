@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Validator\FieldSetValidator;
 use Validator\FieldValidator;
 use Validator\Rule\Email;
+use Validator\Rule\TypeString;
 
 class FieldSetValidatorTest extends TestCase
 {
@@ -17,9 +18,9 @@ class FieldSetValidatorTest extends TestCase
     public function shouldRequireField(): void
     {
         $sut = new FieldSetValidator(
-            FieldValidator::required('email', new Email()),
-            FieldValidator::required('email2', new Email())->nullable(),
-            FieldValidator::requiredWith('email3', 'email', new Email()),
+            FieldValidator::required('email', new Email),
+            FieldValidator::required('email2', new Email)->nullable(),
+            FieldValidator::requiredWith('email3', 'email', new Email),
         );
 
         $sut->validate([
@@ -37,7 +38,7 @@ class FieldSetValidatorTest extends TestCase
     public function shouldNotRequireField(): void
     {
         $sut = new FieldSetValidator(
-            FieldValidator::optional('email', new Email()),
+            FieldValidator::optional('email', new Email),
         );
 
         $sut->validate([]);
@@ -51,7 +52,7 @@ class FieldSetValidatorTest extends TestCase
     public function shouldBeNotValidWhenRequiredFieldMissing(): void
     {
         $sut = new FieldSetValidator(
-            FieldValidator::required('email', new Email()),
+            FieldValidator::required('email', new Email),
         );
 
         $sut->validate([]);
@@ -66,7 +67,7 @@ class FieldSetValidatorTest extends TestCase
     public function shouldNotAllowNull(): void
     {
         $sut = new FieldSetValidator(
-            FieldValidator::required('email', new Email()),
+            FieldValidator::required('email', new Email),
         );
 
         $sut->validate(['email' => null]);
@@ -78,15 +79,16 @@ class FieldSetValidatorTest extends TestCase
     /**
      * @test
      */
-    public function shouldSatisfyRule(): void
+    public function shouldNotSatisfyRules(): void
     {
         $sut = new FieldSetValidator(
-            FieldValidator::required('email', new Email()),
+            FieldValidator::required('email', new Email, (new TypeString())->maxLength(5)),
         );
 
-        $sut->validate(['email' => 'joe.doe.com']);
+        $sut->validate(['email' => 'joe.doe.example.com']);
 
         $this->assertTrue($sut->hasErrors());
+        $this->assertCount(1, $sut->getErrors());
         $this->assertArrayHasKey('email', $sut->getErrors());
     }
 }

@@ -6,6 +6,7 @@ namespace Validator;
 
 use Validator\Error\Error;
 use Validator\Error\ErrorBag;
+use Validator\Rule\Rule;
 
 class FieldValidator
 {

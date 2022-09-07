@@ -10,7 +10,7 @@ class FieldSetValidator
 {
     /** @var FieldValidator[] */
     private array $fields;
-    /** @var ErrorBag[] */
+    /** @var array|ErrorBag[] */
     private array $errors = [];
 
     public function __construct(
@@ -29,6 +29,13 @@ class FieldSetValidator
 
         return $this;
     }
+
+//    public function assertValid(array $fieldSet): void
+//    {
+//        if ($this->validate($fieldSet)->hasErrors()) {
+//            throw new \Exception('Validation faild');
+//        }
+//    }
 
     public function hasErrors(): bool
     {

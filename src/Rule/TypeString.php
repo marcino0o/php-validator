@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Validator\Rule;
 
-use Validator\Error\Error;
-use Validator\Rule;
+use Validator\Dictionary\TypeStringDictionary as Dictionary;
 
 class TypeString extends Rule
 {
+    protected array $messages = Dictionary::MESSAGES;
+
     private ?int $minLength = null;
     private ?int $maxLength = null;
 
@@ -34,10 +35,10 @@ class TypeString extends Rule
         return $this;
     }
 
-    public function isSatisfiedBy(mixed $subject): bool
+    protected function isValid(mixed $subject): bool
     {
         if (!is_string($subject)) {
-            $this->errors->append(new Error('valueMustBeAString', ['value' => $subject]));
+            $this->errors->createAndAppend($this->messages[Dictionary::VALUE_MUST_BE_A_STRING], ['value' => $subject]);
 
             return false;
         }
@@ -46,18 +47,20 @@ class TypeString extends Rule
             $stringLength = mb_strlen($subject);
 
             if (isset($this->minLength) && $stringLength < $this->minLength) {
-                $this->errors->append(
-                    new Error('stringLengthTooShort', ['value' => $subject, 'minLength' => $this->minLength])
+                $this->errors->createAndAppend(
+                    $this->messages[Dictionary::LENGTH_TOO_SHORT],
+                    ['value' => $subject, 'minLength' => $this->minLength]
                 );
             }
 
             if (isset($this->maxLength) && $stringLength > $this->maxLength) {
-                $this->errors->append(
-                    new Error('stringLengthTooLong', ['value' => $subject, 'maxLength' => $this->maxLength])
+                $this->errors->createAndAppend(
+                    $this->messages[Dictionary::LENGTH_TOO_LONG],
+                    ['value' => $subject, 'maxLength' => $this->maxLength]
                 );
             }
         }
 
-        return $this->errors->count() === 0;
+        return $this->errors->empty();
     }
 }

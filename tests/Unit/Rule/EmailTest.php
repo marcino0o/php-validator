@@ -16,7 +16,7 @@ class EmailTest extends TestCase
      */
     public function shouldBeSatisfiedBy(string $email): void
     {
-        $sut = new Email();
+        $sut = new Email;
 
         $this->assertTrue($sut->isSatisfiedBy($email));
     }
@@ -41,7 +41,6 @@ class EmailTest extends TestCase
     public function shouldNotBeSatisfiedBy(string $email): void
     {
         $sut = new Email();
-
         $this->assertFalse($sut->isSatisfiedBy($email));
     }
 
@@ -52,7 +51,10 @@ class EmailTest extends TestCase
             ['@example.com'],
             ['joe.doe@example'],
             ['joe.doe@not.existing.example.com'],
-            ['joe.doe']
+            ['joe.doe'],
+            ['joe doe@example.com'],
+            ['joe.doe@ example.com'],
+            ['joe.doe.example.com'],
         ];
     }
 }

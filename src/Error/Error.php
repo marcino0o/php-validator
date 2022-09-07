@@ -7,24 +7,24 @@ namespace Validator\Error;
 class Error
 {
     private string $message;
-    private int $code;
     private mixed $context;
 
-    public function __construct(string $message, mixed $context = null, int $code = 0)
+    public function __construct(string $message, array $context = [])
     {
         $this->message = $message;
-        $this->code = $code;
         $this->context = $context;
     }
 
     public function getMessage(): string
     {
-        return $this->message;
-    }
-
-    public function getCode(): int
-    {
-        return $this->code;
+        return str_replace(
+            array_map(
+                static fn(string $key): string => sprintf('{{ %s }}', $key),
+                array_keys($this->context)
+            ),
+            array_map('strval', array_values($this->context)),
+            $this->message
+        );
     }
 
     public function getContext(): mixed
