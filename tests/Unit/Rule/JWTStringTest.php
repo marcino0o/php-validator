@@ -15,7 +15,7 @@ class JWTStringTest extends TestCase
     public function shouldBeSatisfied(): void
     {
         $sut = new JWTString();
-        $this->assertTrue($sut->isSatisfiedBy('aaa.bbb.ccc'));
+        $this->assertTrue($sut->isSatisfiedBy('aaA.Bbb.cCc'));
     }
 
     /**

@@ -44,23 +44,42 @@ class TypeString extends Rule
         }
 
         if (isset($this->minLength) || isset($this->maxLength)) {
-            $stringLength = mb_strlen($subject);
-
-            if (isset($this->minLength) && $stringLength < $this->minLength) {
-                $this->errors->createAndAppend(
-                    $this->messages[Dictionary::LENGTH_TOO_SHORT],
-                    ['value' => $subject, 'minLength' => $this->minLength]
-                );
-            }
-
-            if (isset($this->maxLength) && $stringLength > $this->maxLength) {
-                $this->errors->createAndAppend(
-                    $this->messages[Dictionary::LENGTH_TOO_LONG],
-                    ['value' => $subject, 'maxLength' => $this->maxLength]
-                );
-            }
+            $this->validateMinLength($subject);
+            $this->validateMaxLength($subject);
         }
 
         return $this->errors->empty();
+    }
+
+    private function validateMinLength(string $subject): void
+    {
+        if ($this->minLength === null) {
+            return;
+        }
+
+        $stringLength = mb_strlen($subject);
+
+        if ($stringLength < $this->minLength) {
+            $this->errors->createAndAppend(
+                $this->messages[Dictionary::LENGTH_TOO_SHORT],
+                ['value' => $subject, 'minLength' => $this->minLength, 'length' => $stringLength]
+            );
+        }
+    }
+
+    private function validateMaxLength(string $subject): void
+    {
+        if ($this->maxLength === null) {
+            return;
+        }
+
+        $stringLength = mb_strlen($subject);
+
+        if ($stringLength > $this->maxLength) {
+            $this->errors->createAndAppend(
+                $this->messages[Dictionary::LENGTH_TOO_LONG],
+                ['value' => $subject, 'maxLength' => $this->maxLength, 'length' => $stringLength]
+            );
+        }
     }
 }

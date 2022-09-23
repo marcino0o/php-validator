@@ -8,7 +8,6 @@
 
 require('vendor/autoload.php');
 
-use Validator\Dictionary\TypeStringDictionary as Dictionary;
 use Validator\Field;
 use Validator\Rule\TypeString;
 
