@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Validator;
 
-use Validator\Error\Error;
+use InvalidArgumentException;
+use Validator\Dictionary\FieldDictionary;
 use Validator\Error\ErrorBag;
 use Validator\Rule\Rule;
 
@@ -16,6 +17,7 @@ class Field
     private bool $nullable = false;
     private string $requiredWith;
     private ErrorBag $errors;
+    protected array $messages = FieldDictionary::MESSAGES;
 
     private function __construct(
         public readonly string $name,
@@ -53,7 +55,7 @@ class Field
     {
         if (!array_key_exists($this->name, $fieldSet)) {
             if ($this->isRequired($fieldSet)) {
-                $this->errors->append(new Error('fieldRequired'));
+                $this->errors->createAndAppend($this->messages[FieldDictionary::FIELD_IS_REQUIRED]);
             }
 
             return $this;
@@ -62,7 +64,7 @@ class Field
         $subject = $fieldSet[$this->name];
         if ($subject === null) {
             if (!$this->nullable) {
-                $this->errors->append(new Error('nullNotAllowed'));
+                $this->errors->createAndAppend($this->messages[FieldDictionary::FIELD_IS_NOT_NULLABLE]);
             }
 
             return $this;
@@ -97,5 +99,21 @@ class Field
     public function getErrors(): ErrorBag
     {
         return $this->errors;
+    }
+    public function withMessages(array $messages): self
+    {
+        $invalidErrors = array_diff(array_keys($messages), array_keys($this->messages));
+
+        if (!empty($invalidErrors)) {
+            throw new InvalidArgumentException(
+                sprintf('Unknown errors: %s for %s, allowed: %s',
+                    implode(', ', $invalidErrors), self::class, implode(', ', array_keys($this->messages))
+                )
+            );
+        }
+
+        $this->messages = array_merge($this->messages, $messages);
+
+        return $this;
     }
 }

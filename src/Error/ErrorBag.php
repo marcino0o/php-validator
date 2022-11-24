@@ -47,7 +47,7 @@ class ErrorBag implements IteratorAggregate
         $this->errors = [];
     }
 
-    public function createAndAppend(string $message, array $context): self
+    public function createAndAppend(string $message, array $context = []): self
     {
         $this->append(new Error($message, $context));
 
