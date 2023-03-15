@@ -32,6 +32,7 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
 
+  Run-QA-Checks:
     - name: Run test suite
       run: composer test:unit
 
