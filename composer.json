@@ -35,13 +35,15 @@
   },
   "scripts": {
     "pre-commit": [
-      "@phpcs:all"
+      "@phpcs:diff"
     ],
     "phpcs:all": "php vendor/bin/phpcs src tests --standard=PSR12 --runtime-set ignore_warnings_on_exit 1",
     "phpcs:all-fix": "php vendor/bin/phpcbf src tests --standard=PSR12 --runtime-set ignore_warnings_on_exit 1",
     "phpcs:diff": "git diff --diff-filter=ACMR --name-only HEAD -- '*.php'| xargs -r php vendor/bin/phpcs --standard=PSR12 --runtime-set ignore_warnings_on_exit 1",
     "phpcs:diff-fix": "git diff --diff-filter=ACMR --name-only HEAD -- '*.php'| xargs -r php vendor/bin/phpcbf --standard=PSR12 --runtime-set ignore_warnings_on_exit 1",
     "phpstan:all": "php vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=512M --xdebug",
-    "phpstan:diff": "git diff --diff-filter=ACMR --name-only HEAD -- '*.php'| xargs -r composer phpstan:all"
+    "phpstan:diff": "git diff --diff-filter=ACMR --name-only HEAD -- '*.php'| xargs -r composer phpstan:all",
+
+    "test:unit": "php vendor/bin/phpunit tests/Unit"
   }
 }
