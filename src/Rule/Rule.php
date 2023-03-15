@@ -13,7 +13,8 @@ abstract class Rule
 
     protected ErrorBag $errors;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->errors = new ErrorBag();
     }
 
@@ -35,7 +36,11 @@ abstract class Rule
     {
         if (!array_key_exists($error, $this->messages)) {
             throw new InvalidArgumentException(
-                sprintf('Unknown error %s for %s rule', $error, static::class)
+                sprintf(
+                    'Unknown error %s for %s rule',
+                    $error,
+                    static::class
+                )
             );
         }
 
@@ -50,8 +55,11 @@ abstract class Rule
 
         if (!empty($invalidErrors)) {
             throw new InvalidArgumentException(
-                sprintf('Unknown errors: %s for %s rule, allowed: %s',
-                    implode(', ', $invalidErrors), static::class, implode(', ', array_keys($this->messages))
+                sprintf(
+                    'Unknown errors: %s for %s rule, allowed: %s',
+                    implode(', ', $invalidErrors),
+                    static::class,
+                    implode(', ', array_keys($this->messages))
                 )
             );
         }

@@ -18,9 +18,9 @@ class FieldSetValidatorTest extends TestCase
     public function shouldRequireField(): void
     {
         $sut = new FieldSetValidator(
-            Field::required('email', new Email),
-            Field::required('email2', new Email)->nullable(),
-            Field::requiredWith('email3', 'email', new Email),
+            Field::required('email', new Email()),
+            Field::required('email2', new Email())->nullable(),
+            Field::requiredWith('email3', 'email', new Email()),
         );
 
         $sut->validate([
@@ -38,7 +38,7 @@ class FieldSetValidatorTest extends TestCase
     public function shouldNotRequireField(): void
     {
         $sut = new FieldSetValidator(
-            Field::optional('email', new Email),
+            Field::optional('email', new Email()),
         );
 
         $sut->validate([]);
@@ -52,7 +52,7 @@ class FieldSetValidatorTest extends TestCase
     public function shouldBeNotValidWhenRequiredFieldMissing(): void
     {
         $sut = new FieldSetValidator(
-            Field::required('email', new Email),
+            Field::required('email', new Email()),
         );
 
         $sut->validate([]);
@@ -67,7 +67,7 @@ class FieldSetValidatorTest extends TestCase
     public function shouldNotAllowNull(): void
     {
         $sut = new FieldSetValidator(
-            Field::required('email', new Email),
+            Field::required('email', new Email()),
         );
 
         $sut->validate(['email' => null]);
@@ -82,7 +82,7 @@ class FieldSetValidatorTest extends TestCase
     public function shouldNotSatisfyRules(): void
     {
         $sut = new FieldSetValidator(
-            Field::required('email', new Email, (new TypeString())->maxLength(5)),
+            Field::required('email', new Email(), (new TypeString())->maxLength(5)),
         );
 
         $sut->validate(['email' => 'joe.doe.example.com']);

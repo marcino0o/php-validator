@@ -15,7 +15,7 @@ class TypeDateTimeTest extends TestCase
      */
     public function shouldBeSatisfied(mixed $dateString): void
     {
-        $sut = new TypeDateTime;
+        $sut = new TypeDateTime();
         $this->assertTrue($sut->isSatisfiedBy($dateString));
     }
 
@@ -36,7 +36,7 @@ class TypeDateTimeTest extends TestCase
      */
     public function shouldNotBeSatisfied(mixed $dateString): void
     {
-        $sut = new TypeDateTime;
+        $sut = new TypeDateTime();
         $this->assertFalse($sut->isSatisfiedBy($dateString));
     }
 

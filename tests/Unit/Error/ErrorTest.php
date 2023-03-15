@@ -16,7 +16,7 @@ class ErrorTest extends TestCase
      */
     public function shouldReplaceContextMergeWordsInAMessage(): void
     {
-        $sut = (new TypeString)->minLength(5);
+        $sut = (new TypeString())->minLength(5);
         $sut->withMessage(
             TypeStringDictionary::LENGTH_TOO_SHORT,
             'Min length {{ minLength }} is not satisfied by "{{ value }}"'

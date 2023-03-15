@@ -106,8 +106,11 @@ class Field
 
         if (!empty($invalidErrors)) {
             throw new InvalidArgumentException(
-                sprintf('Unknown errors: %s for %s, allowed: %s',
-                    implode(', ', $invalidErrors), self::class, implode(', ', array_keys($this->messages))
+                sprintf(
+                    'Unknown errors: %s for %s, allowed: %s',
+                    implode(', ', $invalidErrors),
+                    self::class,
+                    implode(', ', array_keys($this->messages))
                 )
             );
         }

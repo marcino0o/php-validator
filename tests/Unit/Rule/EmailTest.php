@@ -15,7 +15,7 @@ class EmailTest extends TestCase
      */
     public function shouldBeSatisfiedBy(string $email): void
     {
-        $sut = new Email;
+        $sut = new Email();
 
         $this->assertTrue($sut->isSatisfiedBy($email));
     }

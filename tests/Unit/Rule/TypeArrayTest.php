@@ -14,7 +14,7 @@ class TypeArrayTest extends TestCase
      */
     public function shouldBeSatisfied(): void
     {
-        $sut = new TypeArray;
+        $sut = new TypeArray();
         $this->assertTrue($sut->isSatisfiedBy([]));
     }
 
@@ -23,7 +23,7 @@ class TypeArrayTest extends TestCase
      */
     public function shouldNotBeSatisfied(): void
     {
-        $sut = new TypeArray;
+        $sut = new TypeArray();
         $this->assertFalse($sut->isSatisfiedBy(''));
     }
 
@@ -32,7 +32,7 @@ class TypeArrayTest extends TestCase
      */
     public function shouldBeSatisfiedWithAllowedKeys(): void
     {
-        $sut = (new TypeArray)->withAllowedKeys('first', 'second');
+        $sut = (new TypeArray())->withAllowedKeys('first', 'second');
         $this->assertTrue($sut->isSatisfiedBy(['first' => 1, 'second' => 2]));
         $this->assertTrue($sut->isSatisfiedBy(['first' => 1]));
         $this->assertTrue($sut->isSatisfiedBy(['second' => 2]));
@@ -43,7 +43,7 @@ class TypeArrayTest extends TestCase
      */
     public function shouldNotBeSatisfiedWithNotAllowedKeys(): void
     {
-        $sut = (new TypeArray)->withAllowedKeys('first', 'second');
+        $sut = (new TypeArray())->withAllowedKeys('first', 'second');
         $this->assertFalse($sut->isSatisfiedBy(['first' => 1, 'second' => 2, 'third' => 3]));
         $this->assertFalse($sut->isSatisfiedBy(['zero' => 0]));
         $this->assertFalse($sut->isSatisfiedBy([1 => 'first']));
@@ -54,7 +54,7 @@ class TypeArrayTest extends TestCase
      */
     public function shouldBeSatisfiedWithRequiredKeys(): void
     {
-        $sut = (new TypeArray)->withRequiredKeys('first', 'second');
+        $sut = (new TypeArray())->withRequiredKeys('first', 'second');
         $this->assertTrue($sut->isSatisfiedBy(['first' => 1, 'second' => 2]));
         $this->assertTrue($sut->isSatisfiedBy(['first' => 1, 'second' => 2, 'third' => 3]));
     }
@@ -64,7 +64,7 @@ class TypeArrayTest extends TestCase
      */
     public function shouldNotBeSatisfiedWhenRequiredKeyIsMissing(): void
     {
-        $sut = (new TypeArray)->withRequiredKeys('first', 'second');
+        $sut = (new TypeArray())->withRequiredKeys('first', 'second');
         $this->assertFalse($sut->isSatisfiedBy(['first' => 1]));
         $this->assertFalse($sut->isSatisfiedBy(['third' => 3]));
     }

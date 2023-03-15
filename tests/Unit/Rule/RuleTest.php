@@ -78,7 +78,7 @@ class RuleTest extends TestCase
      */
     public function shouldNotHaveError(): void
     {
-        $sut = new Email;
+        $sut = new Email();
         $sut->isSatisfiedBy('joedoe@example.com');
         $this->assertNull($sut->getErrors()->first());
     }
