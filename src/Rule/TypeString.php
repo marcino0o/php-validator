@@ -10,8 +10,8 @@ class TypeString extends Rule
 {
     protected array $messages = Dictionary::MESSAGES;
 
-    private ?int $minLength = null;
-    private ?int $maxLength = null;
+    private int $minLength;
+    private int $maxLength;
 
     public function minLength(int $minLength): self
     {
@@ -53,7 +53,7 @@ class TypeString extends Rule
 
     private function validateMinLength(string $subject): void
     {
-        if ($this->minLength === null) {
+        if (!isset($this->minLength)) {
             return;
         }
 
@@ -69,7 +69,7 @@ class TypeString extends Rule
 
     private function validateMaxLength(string $subject): void
     {
-        if ($this->maxLength === null) {
+        if (!isset($this->maxLength)) {
             return;
         }
 

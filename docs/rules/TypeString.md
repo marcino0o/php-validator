@@ -11,9 +11,9 @@ require('vendor/autoload.php');
 use Validator\Field;
 use Validator\Rule\TypeString;
 
-$anyString = new TypeString;
+$anyString = new TypeString();
 
-$lengthBetween = new TypeString;
+$lengthBetween = new TypeString();
 $lengthBetween->lengthBetween(5, 32);
 
 $validator = new FieldSetValidator(
@@ -30,7 +30,7 @@ $validator = new FieldSetValidator(
 use Validator\Field;
 use Validator\Rule\TypeString;
 
-Field::required('text', (new TypeString)->minLength(5));
+Field::required('text', (new TypeString())->minLength(5));
 ```
 
 ```php
@@ -39,7 +39,7 @@ Field::required('text', (new TypeString)->minLength(5));
 use Validator\Field;
 use Validator\Rule\TypeString;
 
-Field::required('text', (new TypeString)->maxLength(32));
+Field::required('text', (new TypeString())->maxLength(32));
 ```
 
 ```php
@@ -48,5 +48,5 @@ Field::required('text', (new TypeString)->maxLength(32));
 use Validator\Field;
 use Validator\Rule\TypeString;
 
-Field::required('text', (new TypeString)->lengthBetween(5, 32));
+Field::required('text', (new TypeString())->lengthBetween(5, 32));
 ```

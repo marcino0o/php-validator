@@ -53,15 +53,30 @@ class Field
 
     public function validate(array $fieldSet): self
     {
-        if (!array_key_exists($this->name, $fieldSet)) {
+        if (str_contains($this->name, '.')) {
+            $branches = explode('.', $this->name);
+            $subject = $fieldSet;
+            foreach ($branches as $branch) {
+                if (!array_key_exists($branch, $subject)) {
+                    if ($this->isRequired($fieldSet)) {
+                        $this->errors->createAndAppend($this->messages[FieldDictionary::FIELD_IS_REQUIRED]);
+                    }
+
+                    return $this;
+                }
+
+                $subject = $subject[$branch];
+            }
+        } else if (!array_key_exists($this->name, $fieldSet)) {
             if ($this->isRequired($fieldSet)) {
                 $this->errors->createAndAppend($this->messages[FieldDictionary::FIELD_IS_REQUIRED]);
             }
 
             return $this;
+        } else {
+            $subject = $fieldSet[$this->name];
         }
 
-        $subject = $fieldSet[$this->name];
         if ($subject === null) {
             if (!$this->nullable) {
                 $this->errors->createAndAppend($this->messages[FieldDictionary::FIELD_IS_NOT_NULLABLE]);
@@ -93,7 +108,24 @@ class Field
 
     private function isRequired(array $fieldSet): bool
     {
-        return $this->required || (isset($this->requiredWith) && array_key_exists($this->requiredWith, $fieldSet));
+        if (isset($this->requiredWith)) {
+            if (str_contains($this->requiredWith, '.')) {
+                $subject = $fieldSet;
+                foreach (explode('.', $this->requiredWith) as $branch) {
+                    if (!array_key_exists($branch, $subject)) {
+                        return false;
+                    }
+
+                    $subject = $subject[$branch];
+                }
+
+                return true;
+            }
+
+            return array_key_exists($this->requiredWith, $fieldSet);
+        }
+
+        return $this->required;
     }
 
     public function getErrors(): ErrorBag

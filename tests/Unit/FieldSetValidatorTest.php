@@ -85,10 +85,25 @@ class FieldSetValidatorTest extends TestCase
             Field::required('email', new Email(), (new TypeString())->maxLength(5)),
         );
 
-        $sut->validate(['email' => 'joe.doe.example.com']);
+        $sut->validate(['email' => 'joe.doe@example.com']);
 
         $this->assertTrue($sut->hasErrors());
         $this->assertCount(1, $sut->getErrors());
         $this->assertArrayHasKey('email', $sut->getErrors());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldSatisfyRulesWithMultiDimension(): void
+    {
+        $sut = new FieldSetValidator(
+            Field::requiredWith('author.email', 'author', new Email()),
+            Field::requiredWith('author.address.street', 'author', new TypeString()),
+        );
+
+        $sut->validate(['author' => ['email' => 'joe.doe@example.com', 'address' => ['street' => '5th Ave.']]]);
+
+        $this->assertFalse($sut->hasErrors());
     }
 }

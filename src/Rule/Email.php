@@ -9,10 +9,10 @@ use Validator\Dictionary\EmailDictionary as Dictionary;
 class Email extends Rule
 {
     protected array $messages = Dictionary::MESSAGES;
-    /*** @var null|string[]*/
-    private ?array $allowedDomains = null;
-    /*** @var null|string[]*/
-    private ?array $blockedDomains = null;
+    /*** @var string[]*/
+    private array $allowedDomains;
+    /*** @var string[] */
+    private array $blockedDomains;
 
     public function inDomain(string ...$allowedDomains): self
     {
@@ -42,7 +42,7 @@ class Email extends Rule
             $this->errors->createAndAppend($this->messages[Dictionary::MUST_HAVE_VALID_DOMAIN], ['value' => $subject]);
         }
 
-        if ($this->allowedDomains !== null && !in_array($domain, $this->allowedDomains, true)) {
+        if (isset($this->allowedDomains) && !in_array($domain, $this->allowedDomains, true)) {
             $this->errors->createAndAppend(
                 $this->messages[Dictionary::MUST_BE_IN_ALLOWED_DOMAIN],
                 [
@@ -53,7 +53,7 @@ class Email extends Rule
             );
         }
 
-        if ($this->blockedDomains !== null && in_array($domain, $this->blockedDomains, true)) {
+        if (isset($this->blockedDomains) && in_array($domain, $this->blockedDomains, true)) {
             $this->errors->createAndAppend(
                 $this->messages[Dictionary::MUST_NOT_BE_IN_BLOCKED_DOMAIN],
                 [

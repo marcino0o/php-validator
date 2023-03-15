@@ -9,10 +9,10 @@ use Validator\Dictionary\TypeArrayDictionary as Dictionary;
 class TypeArray extends Rule
 {
     protected array $messages = Dictionary::MESSAGES;
-    /** @var string[]|null */
-    private ?array $allowedKeys = null;
     /** @var string[] */
-    private ?array $requiredKeys = null;
+    private array $allowedKeys;
+    /** @var string[] */
+    private array $requiredKeys;
 
     protected function isValid(mixed $subject): bool
     {
@@ -44,7 +44,7 @@ class TypeArray extends Rule
 
     private function validateAllowedKeys(array $subject): void
     {
-        if ($this->allowedKeys === null) {
+        if (!isset($this->allowedKeys)) {
             return;
         }
 
@@ -65,7 +65,7 @@ class TypeArray extends Rule
 
     private function validateRequiredKeys(array $subject): void
     {
-        if ($this->requiredKeys === null) {
+        if (!isset($this->requiredKeys)) {
             return;
         }
 

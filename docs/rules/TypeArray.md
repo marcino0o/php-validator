@@ -11,12 +11,13 @@ require('vendor/autoload.php');
 use Validator\Field;
 use Validator\Rule\TypeArray;
 
-$anyArray = new TypeArray;
-$requiredKeys = new TypeArray;
+$anyArray = new TypeArray();
+
+$requiredKeys = new TypeArray();
 $requiredKeys->withRequiredKeys('firstName', 'lastName', 'city');
 
 $validator = new FieldSetValidator(
-    Field::required('tags', $typeArray),
+    Field::required('tags', $anyArray),
     Field::required('author', $requiredKeys),
 );
 ```
@@ -38,5 +39,5 @@ Field::required('car', (new TypeArray())->withRequiredKeys('brand', 'model', 'ge
 use Validator\Field;
 use Validator\Rule\TypeArray;
 
-Field::required('player', (new TypeArray)->withAllowedKeys('name', 'age'));
+Field::required('player', (new TypeArray())->withAllowedKeys('name', 'age'));
 ```

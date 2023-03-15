@@ -11,8 +11,8 @@ use InvalidArgumentException;
 
 class TypeDateTime extends Rule
 {
-    private ?DateTimeImmutable $before = null;
-    private ?DateTimeImmutable $after = null;
+    private DateTimeImmutable $before;
+    private DateTimeImmutable $after;
 
     public function before(string $dateString): self
     {
@@ -46,14 +46,14 @@ class TypeDateTime extends Rule
             return false;
         }
 
-        if ($this->before !== null && $date > $this->before) {
+        if (isset($this->before) && $date > $this->before) {
             $this->errors->createAndAppend(
                 'mustBeBefore',
                 ['value' => $subject, 'before' => $this->before->format(DateTimeInterface::ATOM)]
             );
         }
 
-        if ($this->after !== null && $date < $this->after) {
+        if (isset($this->after) && $date < $this->after) {
             $this->errors->createAndAppend(
                 'mustBeAfter',
                 ['value' => $subject, 'after' => $this->after->format(DateTimeInterface::ATOM)]

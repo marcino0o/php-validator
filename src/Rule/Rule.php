@@ -18,6 +18,11 @@ abstract class Rule
         $this->errors = new ErrorBag();
     }
 
+    public static function v(): self
+    {
+        return new static();
+    }
+
     public function isSatisfiedBy(mixed $subject): bool
     {
         $this->errors->truncate();

@@ -12,8 +12,7 @@ use Validator\Field;
 use Validator\Rule\Email;
 
 $validator = new FieldSetValidator(
-    Field::required('email', new Email),
-);
+    Field::required('email', new Email()),
 ```
 
 ## Build in additional rules
@@ -24,7 +23,7 @@ $validator = new FieldSetValidator(
 use Validator\Field;
 use Validator\Rule\Email;
 
-Field::required('email', (new Email)->inDomain('gmail.com', 'yahoo.com'));
+Field::required('email', (new Email())->inDomain('gmail.com', 'yahoo.com'));
 ```
 
 ```php
@@ -33,5 +32,5 @@ Field::required('email', (new Email)->inDomain('gmail.com', 'yahoo.com'));
 use Validator\Field;
 use Validator\Rule\Email;
 
-Field::required('email', (new Email)->notInDomain('yandex.ru'));
+Field::required('email', (new Email())->notInDomain('yandex.ru'));
 ```
