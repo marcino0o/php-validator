@@ -6,13 +6,11 @@ namespace Validator\Error;
 
 class Error
 {
-    private string $message;
-    private mixed $context;
-
-    public function __construct(string $message, array $context = [])
-    {
-        $this->message = $message;
-        $this->context = $context;
+    public function __construct(
+        private readonly string $message,
+        private readonly array $context = [],
+        private readonly array $rules = []
+    ) {
     }
 
     public function getMessage(): string
@@ -22,12 +20,12 @@ class Error
                 static fn(string $key): string => sprintf('{{ %s }}', $key),
                 array_keys($this->context)
             ),
-            array_map('strval', array_values($this->context)),
+            array_map('strval', array_values(array_merge($this->context, $this->rules))),
             $this->message
         );
     }
 
-    public function getContext(): mixed
+    public function getContext(): array
     {
         return $this->context;
     }
