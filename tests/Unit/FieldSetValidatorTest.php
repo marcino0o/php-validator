@@ -106,4 +106,18 @@ class FieldSetValidatorTest extends TestCase
 
         $this->assertFalse($sut->hasErrors());
     }
+
+    /**
+     * @test
+     */
+    public function shouldNotBeSatisfyWithForbiddenFields(): void
+    {
+        $sut = new FieldSetValidator(Field::required('hello', new TypeString()));
+        $sut->withAllowedFields('hello', 'bye');
+
+        $sut->validate(['hello' => 'world', 'world' => 'hello']);
+
+        $this->assertArrayHasKey('world', $sut->getErrors());
+        $this->assertArrayNotHasKey('bye', $sut->getErrors());
+    }
 }

@@ -58,6 +58,55 @@ if ($validator->validate($dataToValidate)->hasErrors()) {
 // all good
 ```
 
+#### Specifying allowed fields in set
+
+```php
+<?php
+
+require('vendor/autoload.php');
+
+use Validator\FieldSetValidator;
+use Validator\Field;
+use Validator\Rule\Email;
+
+$dataToValidate = [
+    'email' => 'joe.doe@example.com', // will pass
+    'name' => 'Joe Doe', // will not pass
+]; 
+
+$validator = new FieldSetValidator(
+    Field::required('email', new Email()),
+);
+$validator->withAllowedFields('email');
+```
+
+#### Fields in sets with multidimensional arrays
+
+```php
+<?php
+
+require('vendor/autoload.php');
+
+use Validator\FieldSetValidator;
+use Validator\Field;
+use Validator\Rule\TypeArray
+use Validator\Rule\TypeString;
+use Validator\Rule\Uuid;
+
+$dataToValidate = [
+    'author' => [
+        'uuid' => 'c07f9405-8618-49a7-980a-e4982e307274',
+        'name' => 'Joe Doe',
+    ],   
+]; 
+
+$validator = new FieldSetValidator(
+    Field::required('author', (new TypeArray())->withRequiredKeys('uuid', 'name')),
+    Field::requiredWith('author.uuid', 'author' new Uuid()),
+    Field::requiredWith('author.name', 'author' new TypeString()),
+);
+```
+
 ### Field requirement options
 
 **Always required**
@@ -161,3 +210,4 @@ $example1->withMessage(Dictionary::LENGTH_TOO_SHORT, 'Text is too short.')
 - [TypeArray](https://github.com/marcino0o/php-validator/blob/main/docs/rules/TypeArray.md)
 - [TypeDateTime](https://github.com/marcino0o/php-validator/blob/main/docs/rules/TypeDateTime.md)
 - [TypeString](https://github.com/marcino0o/php-validator/blob/main/docs/rules/TypeString.md)
+- [Uuid](https://github.com/marcino0o/php-validator/blob/main/docs/rules/Uuid.md)
