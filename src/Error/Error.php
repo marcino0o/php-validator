@@ -18,7 +18,7 @@ class Error
         return str_replace(
             array_map(
                 static fn(string $key): string => sprintf('{{ %s }}', $key),
-                array_keys($this->context)
+                array_keys(array_merge($this->context, $this->rules))
             ),
             array_map('strval', array_values(array_merge($this->context, $this->rules))),
             $this->message
