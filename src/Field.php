@@ -57,7 +57,7 @@ class Field
             $branches = explode('.', $this->name);
             $subject = $fieldSet;
             foreach ($branches as $branch) {
-                if (!array_key_exists($branch, $subject)) {
+                if (!is_array($subject) || !array_key_exists($branch, $subject)) {
                     if ($this->isRequired($fieldSet)) {
                         $this->errors->createAndAppend($this->messages[FieldDictionary::FIELD_IS_REQUIRED]);
                     }

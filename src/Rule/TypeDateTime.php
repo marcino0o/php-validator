@@ -38,6 +38,12 @@ class TypeDateTime extends Rule
 
     protected function isValid(mixed $subject): bool
     {
+        if (!is_string($subject)) {
+            $this->errors->createAndAppend('valueMustBeADate', ['value' => $subject]);
+
+            return false;
+        }
+
         try {
             $date = new DateTimeImmutable($subject);
         } catch (Exception) {
