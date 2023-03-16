@@ -16,7 +16,7 @@ class NumberDictionary
         self::MUST_BE_A_NUMBER => 'Value must be a number',
         self::MUST_BE_AN_INTEGER_NUMBER => 'Value must be an integer number',
         self::MUST_BE_A_FLOAT_NUMBER => 'Value must be a float number',
-        self::MUST_BE_LEQ_THAN => 'Value must be lower or equal that {max}',
-        self::MUST_BE_GEQ_THAN => 'Value must be grater or equal that {min}',
+        self::MUST_BE_LEQ_THAN => 'Value must be lower or equal that {{ max }}',
+        self::MUST_BE_GEQ_THAN => 'Value must be grater or equal that {{ min }}',
     ];
 }
