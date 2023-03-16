@@ -108,7 +108,7 @@ class NumberTest extends TestCase
     public function shouldNotBeSatisfiedWithOutOfRangeNumber(): void
     {
         $sut = new Number();
-        $sut->between(0,10);
+        $sut->between(0, 10);
         $this->assertFalse($sut->isSatisfiedBy(-1));
         $this->assertTrue($sut->isSatisfiedBy(0));
         $this->assertTrue($sut->isSatisfiedBy(10));
