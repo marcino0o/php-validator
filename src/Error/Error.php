@@ -20,7 +20,16 @@ class Error
                 static fn(string $key): string => sprintf('{{ %s }}', $key),
                 array_keys(array_merge($this->context, $this->rules))
             ),
-            array_map('strval', array_values(array_merge($this->context, $this->rules))),
+            array_map(
+                static function(mixed $value): string {
+                    if (is_array($value)) {
+                        return implode(', ', $value);
+                    }
+
+                    return (string)$value;
+                },
+                array_values(array_merge($this->context, $this->rules))
+            ),
             $this->message
         );
     }
