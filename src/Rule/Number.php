@@ -59,7 +59,8 @@ class Number extends Rule
 
         if (isset($this->type) && $this->type === 'int' && !is_int($subject)) {
             $this->errors->createAndAppend(
-                $this->messages[Dictionary::MUST_BE_AN_INTEGER_NUMBER], ['value' => $subject]
+                $this->messages[Dictionary::MUST_BE_AN_INTEGER_NUMBER],
+                ['value' => $subject]
             );
 
             return false;

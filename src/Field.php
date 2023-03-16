@@ -67,7 +67,7 @@ class Field
 
                 $subject = $subject[$branch];
             }
-        } else if (!array_key_exists($this->name, $fieldSet)) {
+        } elseif (!array_key_exists($this->name, $fieldSet)) {
             if ($this->isRequired($fieldSet)) {
                 $this->errors->createAndAppend($this->messages[FieldDictionary::FIELD_IS_REQUIRED]);
             }
