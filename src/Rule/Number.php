@@ -28,6 +28,14 @@ class Number extends Rule
         return $this;
     }
 
+    public function between(int|float $min, int|float $max): self
+    {
+        $this->min = $min;
+        $this->max = $max;
+
+        return $this;
+    }
+
     public function unsigned(): self
     {
         $this->min = 0;
@@ -51,7 +59,7 @@ class Number extends Rule
 
     protected function isValid(mixed $subject): bool
     {
-        if (!isset($this->type) && (!is_int($subject) || !is_float($subject))) {
+        if (!isset($this->type) && !is_int($subject) && !is_float($subject)) {
             $this->errors->createAndAppend($this->messages[Dictionary::MUST_BE_A_NUMBER], ['value' => $subject]);
 
             return false;
