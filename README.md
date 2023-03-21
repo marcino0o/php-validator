@@ -4,7 +4,7 @@
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/marcino0o/php-validator)
 ![GitHub](https://img.shields.io/github/license/marcino0o/php-validator)
 ![Gitlab code coverage](https://img.shields.io/gitlab/coverage/marcino0o/php-validator/main)
-![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline-status/marcino0o/php-validator?branch=main)
+![Gitlab pipeline status](https://img.shields.io/github/actions/workflow/status/marcino0o/php-validator/php.yml?branch=main)
 
 PHP package for easy validation
 
