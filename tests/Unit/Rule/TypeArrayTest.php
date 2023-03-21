@@ -68,4 +68,14 @@ class TypeArrayTest extends TestCase
         $this->assertFalse($sut->isSatisfiedBy(['first' => 1]));
         $this->assertFalse($sut->isSatisfiedBy(['third' => 3]));
     }
+
+    /**
+     * @test
+     */
+    public function shouldNotBeSatisfiedWithEmptyArray(): void
+    {
+        $sut = (new TypeArray())->notEmpty();
+        $this->assertFalse($sut->isSatisfiedBy([]));
+        $this->assertTrue($sut->isSatisfiedBy(['one' => 1]));
+    }
 }

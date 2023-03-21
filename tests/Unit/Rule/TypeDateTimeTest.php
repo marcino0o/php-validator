@@ -37,7 +37,7 @@ class TypeDateTimeTest extends TestCase
     public function shouldNotBeSatisfied(mixed $dateString): void
     {
         $sut = new TypeDateTime();
-        $this->assertFalse($sut->isSatisfiedBy($dateString));
+        $this->assertFalse($sut->isSatisfiedBy($dateString), sprintf('Assertion failed with: %s', $dateString));
     }
 
     public function invalidDateTimeProvider(): array
@@ -48,7 +48,31 @@ class TypeDateTimeTest extends TestCase
             ['2022-12-32 00:00:00'],
 //            ['2022-12 12:22:12'],
 //            ['2022-02-30'], this one should not be valid
-            ['fgh']
+            ['fgh'],
+            [false],
+            [null],
         ];
+    }
+
+    /**
+     * @test
+     */
+    public function shouldBeSatisfiedWithDateBefore(): void
+    {
+        $sut = (new TypeDateTime())->before('2023-03-21 23:59:59');
+
+        $this->assertTrue($sut->isSatisfiedBy('2023-03-21 23:59:58'));
+        $this->assertFalse($sut->isSatisfiedBy('2023-03-22 00:00:00'));
+    }
+
+    /**
+     * @test
+     */
+    public function shouldBeSatisfiedWithDateAfter(): void
+    {
+        $sut = (new TypeDateTime())->after('2023-03-21 23:59:59');
+
+        $this->assertTrue($sut->isSatisfiedBy('2023-03-22 00:00:00'));
+        $this->assertFalse($sut->isSatisfiedBy('2023-03-21 23:59:58'));
     }
 }

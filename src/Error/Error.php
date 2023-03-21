@@ -21,9 +21,9 @@ class Error
                 array_keys(array_merge($this->context, $this->rules))
             ),
             array_map(
-                static function(mixed $value): string {
+                static function (mixed $value): string {
                     if (is_array($value)) {
-                        return implode(', ', $value);
+                        return sprintf('[%s]', implode(', ', array_keys($value)));
                     }
 
                     return (string)$value;

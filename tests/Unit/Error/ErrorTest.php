@@ -32,6 +32,24 @@ class ErrorTest extends TestCase
     /**
      * @test
      */
+    public function shouldReplaceContextMergeWordsInAMessageWithArray(): void
+    {
+        $sut = TypeString::v();
+        $sut->withMessage(
+            TypeStringDictionary::VALUE_MUST_BE_A_STRING,
+            'Got: {{ value }}'
+        );
+        $sut->isSatisfiedBy(['a', 'b']);
+
+        $this->assertEquals(
+            'Got: [0, 1]',
+            $sut->getErrors()->first()->getMessage()
+        );
+    }
+
+    /**
+     * @test
+     */
     public function shouldReturnContext(): void
     {
         $context = ['value' => 'xxx', 'min' => 0];

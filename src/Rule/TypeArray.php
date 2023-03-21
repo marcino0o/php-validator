@@ -13,11 +13,18 @@ class TypeArray extends Rule
     private array $allowedKeys;
     /** @var string[] */
     private array $requiredKeys;
+    private bool $notEmpty = false;
 
     protected function isValid(mixed $subject): bool
     {
         if (!is_array($subject)) {
             $this->errors->createAndAppend($this->messages[Dictionary::MUST_BE_AN_ARRAY], ['value' => $subject]);
+
+            return false;
+        }
+
+        if ($this->notEmpty && empty($subject)) {
+            $this->errors->createAndAppend($this->messages[Dictionary::MUST_NOT_BE_EMPTY], ['value' => $subject]);
 
             return false;
         }
@@ -38,6 +45,13 @@ class TypeArray extends Rule
     public function withRequiredKeys(string ...$requiredKeys): self
     {
         $this->requiredKeys = $requiredKeys;
+
+        return $this;
+    }
+
+    public function notEmpty(): self
+    {
+        $this->notEmpty = true;
 
         return $this;
     }

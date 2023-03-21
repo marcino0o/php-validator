@@ -32,6 +32,26 @@ class NumberTest extends TestCase
 
     /**
      * @test
+     * @dataProvider notNumberProvider
+     */
+    public function shouldNotBeSatisfiedByNotNumber(mixed $notNumber): void
+    {
+        $sut = new Number();
+        $this->assertFalse($sut->isSatisfiedBy($notNumber), sprintf('Assertion failed with %s', $notNumber));
+    }
+
+    public function notNumberProvider(): array
+    {
+        return [
+            [null],
+            ['123'],
+            [false],
+            [true],
+        ];
+    }
+
+    /**
+     * @test
      */
     public function shouldNotBeSatisfiedWithFloatNumber(): void
     {

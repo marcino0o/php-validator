@@ -17,7 +17,7 @@ class TypeDateTime extends Rule
     public function before(string $dateString): self
     {
         try {
-            $this->before = new DateTimeImmutable(strtotime($dateString));
+            $this->before = new DateTimeImmutable($dateString);
         } catch (Exception) {
             throw new InvalidArgumentException(sprintf('Can\t convert %s to date', $dateString));
         }
@@ -28,7 +28,7 @@ class TypeDateTime extends Rule
     public function after(string $dateString): self
     {
         try {
-            $this->after = new DateTimeImmutable(strtotime($dateString));
+            $this->after = new DateTimeImmutable($dateString);
         } catch (Exception) {
             throw new InvalidArgumentException(sprintf('Can\t convert %s to date', $dateString));
         }
