@@ -33,7 +33,6 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       - name: Run test suite and cs check in parallel
-        uses: shivammathur/setup-php@v2
         with:
           extensions: intl, pdo_mysql
           coverage: none
