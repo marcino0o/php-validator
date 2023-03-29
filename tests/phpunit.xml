@@ -16,7 +16,7 @@
 
     <testsuites>
         <testsuite name="Validator">
-            <directory>./tests/Unit</directory>
+            <directory>./Unit</directory>
         </testsuite>
     </testsuites>
     <coverage>

@@ -44,6 +44,6 @@
     "phpstan:all": "php vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=512M --xdebug",
     "phpstan:diff": "git diff --diff-filter=ACMR --name-only HEAD -- '*.php'| xargs -r composer phpstan:all",
 
-    "test:unit": "php vendor/bin/phpunit tests/Unit"
+    "test:unit": "php vendor/bin/phpunit -ctests/phpunit.xml"
   }
 }
