@@ -15,27 +15,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
-      - name: Validate composer.json and composer.lock
-        run: composer validate --strict
+    - name: Validate composer.json and composer.lock
+      run: composer validate --strict
 
-      - name: Cache Composer packages
-        id: composer-cache
-        uses: actions/cache@v3
-        with:
-          path: vendor
-          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-php-
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v3
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
 
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress
 
-      - name: Run test suite and cs check in parallel
-        with:
-          extensions: intl, pdo_mysql
-          coverage: none
-        run: |
-          composer run-script --timeout=0 --no-interaction test:unit
-          composer run-script --timeout=0 --no-interaction phpcs:all
+    - name: Run test suite
+      run: composer test:unit
+
+    - name: Run cs check
+      run: composer phpcs:all
