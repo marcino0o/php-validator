@@ -13,6 +13,7 @@ class Number extends Rule
     private string $type;
     private int|float $min;
     private int|float $max;
+    private bool $castable = false;
 
     public function min(int|float $min): self
     {
@@ -57,12 +58,28 @@ class Number extends Rule
         return $this;
     }
 
+    public function castable(): self
+    {
+        $this->castable = true;
+
+        return $this;
+    }
+
     protected function isValid(mixed $subject): bool
     {
         if (!isset($this->type) && !is_int($subject) && !is_float($subject)) {
             $this->errors->createAndAppend($this->messages[Dictionary::MUST_BE_A_NUMBER], ['value' => $subject]);
 
             return false;
+        }
+
+        if (isset($this->type) && $this->castable) {
+            $subjectClone = $subject;
+            settype($subjectClone, $this->type);
+
+            if ($subject == $subjectClone) {
+                $subject = $subjectClone;
+            }
         }
 
         if (isset($this->type) && $this->type === 'int' && !is_int($subject)) {
