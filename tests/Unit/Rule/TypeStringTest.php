@@ -94,4 +94,22 @@ class TypeStringTest extends TestCase
 
         return $data;
     }
+
+    /**
+     * @test
+     */
+    public function shouldBeSatisfiedWithAllowedString(): void
+    {
+        $sut = (new TypeString())->allowedValues('test1', 'test2', 'test3');
+        $this->assertTrue($sut->isSatisfiedBy('test2'));
+    }
+
+    /**
+     * @test
+     */
+    public function shouldNotBeSatisfiedWithNotAllowedString(): void
+    {
+        $sut = (new TypeString())->allowedValues('test1', 'test2', 'test3');
+        $this->assertFalse($sut->isSatisfiedBy('test'));
+    }
 }

@@ -12,6 +12,8 @@ class TypeString extends Rule
 
     private int $minLength;
     private int $maxLength;
+    /** @var string[]  */
+    private array $allowedValues;
 
     private function getRules(): array
     {
@@ -49,6 +51,13 @@ class TypeString extends Rule
         return $this;
     }
 
+    public function allowedValues(string ...$allowedValues): self
+    {
+        $this->allowedValues = $allowedValues;
+
+        return $this;
+    }
+
     protected function isValid(mixed $subject): bool
     {
         if (!is_string($subject)) {
@@ -64,6 +73,13 @@ class TypeString extends Rule
         if (isset($this->minLength) || isset($this->maxLength)) {
             $this->validateMinLength($subject);
             $this->validateMaxLength($subject);
+        }
+
+        if (isset($this->allowedValues) && !in_array($subject, $this->allowedValues, true)) {
+            $this->errors->createAndAppend(
+                $this->messages[Dictionary::NOT_ALLOWED_VALUE],
+                ['value' => $subject, 'allowedValues' => $this->allowedValues],
+            );
         }
 
         return $this->errors->empty();
